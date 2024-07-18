@@ -2,9 +2,13 @@
 const express = require('express');
 const cors = require('cors');
 const router = require('./src/routes/index');
-const cron = require('node-cron');
 const { sequelize } = require('./src/config/bdCon');
 
+
+//modelos
+require('./src/models/Derivaciones');
+
+//finModelos
 const app = express();
 const { PORT } = process.env;
 const port = PORT || 3000;

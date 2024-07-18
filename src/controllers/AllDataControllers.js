@@ -26,7 +26,7 @@ const GetdataOne = async (req,res)=>{
         attributes:['DNI',[
             Sequelize.literal("CONCAT(X_NOMBRE, ' ', X_APMATERNO, ' ', X_APPATERNO)"),
             'nombre'
-        ],[sequelize.col('OFERTA_MAX'),'oferta'] ]
+        ],[sequelize.col('OFERTA_MAX'),'oferta'],[sequelize.col('TELF_1'),'numero'] ]
     });
  
     if (!busqueda) {
