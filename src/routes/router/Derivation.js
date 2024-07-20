@@ -7,4 +7,4 @@ route.post('/',PostDerivaciones)
 route.get('/',AllDerivation)
 
 
-module.exports = route
+module.exports = route;
