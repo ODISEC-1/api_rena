@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/bdCon");
+const moment = require('moment-timezone');
 
 
 const Derivaciones = sequelize.define('Derivaciones',{
@@ -14,7 +15,11 @@ const Derivaciones = sequelize.define('Derivaciones',{
     supervisor:{type:DataTypes.INTEGER,allowNull:false},
     DniAsesor:{type:DataTypes.STRING,allowNull:false},
     FechaGestion:{type:DataTypes.DATE,allowNull:false},
-    FechaDesem:{type:DataTypes.DATE,allowNull:false} 
+    FechaDesem:{type:DataTypes.DATE,allowNull:false},
+    FechaRegistro:{type:DataTypes.DATE, allowNull:false, defaultValue: () => moment.tz('America/Lima').subtract(5, 'hours').format('YYYY-MM-DD HH:mm:ss')},
+    Id_Usuario:{type:DataTypes.INTEGER,allowNull:true,defaultValue:1},
+    FechaModificaion:{type:DataTypes.DATE,allowNull:true},
+    Id_Modificador:{type:DataTypes.INTEGER,allowNull:true}
 },{
   tableName:'Derivaciones',
   timestamps:false   

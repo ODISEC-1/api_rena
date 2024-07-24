@@ -24,7 +24,7 @@ const GetdataOne = async (req,res)=>{
      const busqueda = await Afb_data.findOne({
         where:{DNI: DNI},
         attributes:['DNI',[
-            Sequelize.literal("CONCAT(X_NOMBRE, ' ', X_APMATERNO, ' ', X_APPATERNO)"),
+            Sequelize.literal("CONCAT(X_NOMBRE, ' ',X_APPATERNO , ' ',X_APMATERNO)"),
             'nombre'
         ],[sequelize.col('OFERTA_MAX'),'oferta'],[sequelize.col('TELF_1'),'numero'] ]
     });

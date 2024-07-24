@@ -1,4 +1,15 @@
+const { Tabla_Agencia } = require("../models/Agencia.model");
 const { Derivaciones } = require("../models/Derivaciones");
+const moment = require('moment');
+const { JZtable } = require("../models/JZ.model");
+const { supervisorTable } = require("../models/Supervisor.model");
+
+const formatDateForDatabase = (datestring) => {
+  return moment.tz(datestring, 'America/Lima').subtract(5, 'hours').format('YYYY-MM-DD HH:mm:ss');
+}
+
+
+
 
 const PostDerivaciones = async (req, res) => {
   const {
@@ -19,6 +30,13 @@ const PostDerivaciones = async (req, res) => {
   }
 
   try {
+
+    console.log(horaLlegadaCorreo,fechaDesembolso)
+    const formatFG = formatDateForDatabase(horaLlegadaCorreo);
+    console.log(formatFG)
+    const formatFD = formatDateForDatabase(fechaDesembolso);
+    console.log(formatFD)
+
     const CreateDerivaciones = await Derivaciones.create({
       DNI_Cli: dni,
       Nombres: nombre,
@@ -29,8 +47,8 @@ const PostDerivaciones = async (req, res) => {
       jefeZonal: jefeZonal,
       supervisor: supervisor,
       DniAsesor: Asesor,
-      FechaGestion: horaLlegadaCorreo,
-      FechaDesem: fechaDesembolso,
+      FechaGestion: formatFG,
+      FechaDesem: formatFD,
     });
 
 
@@ -44,7 +62,21 @@ const PostDerivaciones = async (req, res) => {
 
 const AllDerivation = async (req,res)=>{
     try {
-        const dataDerivation = await Derivaciones.findAll()
+        const dataDerivation = await Derivaciones.findAll({
+          include:[
+            {model:Tabla_Agencia,
+              attributes:['Agencia']
+            },
+            {
+              model:JZtable,
+              attributes:['Nombre_JZ']
+            },
+            {
+              model:supervisorTable,
+              attributes:['Nombre_Super']
+            }
+          ]
+        })
         res.status(201).json(dataDerivation) 
     } catch (error) {
         console.error('Error getting derivación:', error);
