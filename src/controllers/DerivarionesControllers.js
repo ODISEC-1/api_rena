@@ -77,6 +77,7 @@ const AllDerivation = async (req,res)=>{
             }
           ]
         })
+        console.log(dataDerivation)
         res.status(201).json(dataDerivation) 
     } catch (error) {
         console.error('Error getting derivación:', error);
@@ -86,5 +87,80 @@ const AllDerivation = async (req,res)=>{
 
 
 
+const UpdateDerivacion=  async (req, res) => {
+  const { id } = req.params;
+  const {
+    nombre,
+    oferta,
+    numero,
+    dni,
+    agencia,
+    jefeZonal,
+    supervisor,
+    horaLlegadaCorreo,
+    fechaDesembolso,
+    montoDesembolso,
+    Asesor
+  } = req.body;
+   console.log(req.body)
 
-module.exports = { PostDerivaciones, AllDerivation };
+  if (
+    !nombre ||
+    !oferta ||
+    !numero ||
+    !dni ||
+    !agencia ||
+    !jefeZonal ||
+    !supervisor ||
+    !horaLlegadaCorreo ||
+    !fechaDesembolso ||
+    !montoDesembolso ||
+    !Asesor
+  ) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+    const derivacion = await Derivaciones.findByPk(id);
+
+    if (!derivacion) {
+      return res.status(404).json({ message: 'Derivacion not found' });
+    }
+
+    derivacion.Nombres = nombre;
+    derivacion.oferta = oferta;
+    derivacion.numero = numero;
+    derivacion.DNI_Cli = dni;
+    derivacion.agencia = agencia;
+    derivacion.jefeZonal = jefeZonal;
+    derivacion.supervisor = supervisor;
+    derivacion.FechaGestion = horaLlegadaCorreo;
+    derivacion.FechaDesem = fechaDesembolso;
+    derivacion.montoDesem = montoDesembolso;
+    derivacion.DniAsesor = Asesor;
+    derivacion.FechaModificaion = moment.tz('America/Lima').subtract(5, 'hours').format('YYYY-MM-DD HH:mm:ss');
+
+    await derivacion.save();
+
+    res.json({ message: 'Derivacion updated successfully', derivacion });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+
+const BusquedaId = async (req,res)=>{
+ const {id} = req.params
+
+try {
+  const busquedaDerivaciones = await Derivaciones.findByPk(id) 
+
+  res.status(200).json(busquedaDerivaciones);
+} catch (error) {
+  console.error('Error getting derivación:', error);
+  return res.status(500).json({ error: 'Error pidiendo la derivación' });
+}
+}
+
+module.exports = { PostDerivaciones, AllDerivation,UpdateDerivacion,BusquedaId };

@@ -18,7 +18,7 @@ const Derivaciones = sequelize.define('Derivaciones',{
     FechaDesem:{type:DataTypes.DATE,allowNull:false},
     FechaRegistro:{type:DataTypes.DATE, allowNull:false, defaultValue: () => moment.tz('America/Lima').subtract(5, 'hours').format('YYYY-MM-DD HH:mm:ss')},
     Id_Usuario:{type:DataTypes.INTEGER,allowNull:true,defaultValue:1},
-    FechaModificaion:{type:DataTypes.DATE,allowNull:true},
+    FechaModificaion:{type:DataTypes.DATE,allowNull:true, defaultValue: () => moment.tz('America/Lima').subtract(5, 'hours').format('YYYY-MM-DD HH:mm:ss')},
     Id_Modificador:{type:DataTypes.INTEGER,allowNull:true}
 },{
   tableName:'Derivaciones',
