@@ -90,10 +90,7 @@ const AllDerivation = async (req,res)=>{
 const UpdateDerivacion=  async (req, res) => {
   const { id } = req.params;
   const {
-    nombre,
-    oferta,
     numero,
-    dni,
     agencia,
     jefeZonal,
     supervisor,
@@ -105,10 +102,7 @@ const UpdateDerivacion=  async (req, res) => {
    console.log(req.body)
 
   if (
-    !nombre ||
-    !oferta ||
     !numero ||
-    !dni ||
     !agencia ||
     !jefeZonal ||
     !supervisor ||
@@ -127,10 +121,9 @@ const UpdateDerivacion=  async (req, res) => {
       return res.status(404).json({ message: 'Derivacion not found' });
     }
 
-    derivacion.Nombres = nombre;
-    derivacion.oferta = oferta;
+
+
     derivacion.numero = numero;
-    derivacion.DNI_Cli = dni;
     derivacion.agencia = agencia;
     derivacion.jefeZonal = jefeZonal;
     derivacion.supervisor = supervisor;
