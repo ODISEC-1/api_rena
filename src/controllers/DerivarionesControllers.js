@@ -120,9 +120,6 @@ const UpdateDerivacion=  async (req, res) => {
     if (!derivacion) {
       return res.status(404).json({ message: 'Derivacion not found' });
     }
-
-
-
     derivacion.numero = numero;
     derivacion.agencia = agencia;
     derivacion.jefeZonal = jefeZonal;

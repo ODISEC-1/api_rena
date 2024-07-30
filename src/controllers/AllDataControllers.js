@@ -2,6 +2,7 @@
 const { sequelize } = require("../config/bdCon");
 const { Afb_data } = require("../models/data.model");
 const {Sequelize} = require('sequelize');
+const { Derivaciones } = require("../models/Derivaciones");
 
 
 const Getdata = async (req, res) => {
@@ -17,6 +18,7 @@ const Getdata = async (req, res) => {
 
 const GetdataOne = async (req,res)=>{
     const {DNI} = req.params;
+    let verificado = false;
      if (!DNI) {
          return res.status(400).json()
      }
@@ -27,12 +29,19 @@ const GetdataOne = async (req,res)=>{
             Sequelize.literal("CONCAT(X_NOMBRE, ' ',X_APPATERNO , ' ',X_APMATERNO)"),
             'nombre'
         ],[sequelize.col('OFERTA_MAX'),'oferta'],[sequelize.col('TELF_1'),'numero'] ]
-    });
- 
+    }); 
+    const VerifynDerivacion = await Derivaciones.findOne({
+        where:{DNI_Cli:DNI}
+    }) 
+    
+    if(VerifynDerivacion){  
+      verificado = true 
+    }
+
     if (!busqueda) {
         return res.status(404).json({ error: 'Registro no encontrado' });
     }
-     res.status(200).json({busqueda})
+     res.status(200).json({busqueda,verificado})
    } catch (error) {
       res.status(400).json(error)    
    }
