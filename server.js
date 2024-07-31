@@ -18,6 +18,11 @@ app.use(cors());
 app.use(express.json());
 app.use('/api', router);
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 sequelize.sync().then(() => {
   console.log('Modelos Sincronizados con la base de datos');
   app.listen(port, () => {
