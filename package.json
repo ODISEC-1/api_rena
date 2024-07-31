@@ -8,6 +8,7 @@
     "dev": "nodemon --experimental-modules server.js"
   },
   "keywords": [],
+  "engines": {"node": ">=14.x"},
   "author": "",
   "license": "ISC",
   "dependencies": {
