@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon --experimental-modules server.js",
-    "postinstall": "mysql2"
+    "dev": "nodemon --experimental-modules server.js"
   },
   "keywords": [],
   "engines": {
