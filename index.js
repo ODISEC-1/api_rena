@@ -3,6 +3,7 @@ const cors = require('cors');
 const router = require('./src/routes/index');
 const {sequelize} = require('./src/config/bdCon')
 
+
 // Modelos
 require('./src/models/Derivaciones');
 require('./src/models/JZ.model');
